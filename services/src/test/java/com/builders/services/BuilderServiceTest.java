@@ -1,7 +1,7 @@
 package com.builders.services;
 
 import com.builders.utils.BuildersUtil;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class BuilderServiceTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Assert.assertNotNull(properties.getProperty("test_hello"));
+        Assertions.assertNotNull(properties.getProperty("test_hello"));
     }
 
 }

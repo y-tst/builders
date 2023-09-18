@@ -1,7 +1,7 @@
 package com.builders.utils;
 
-import junit.framework.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ public class BuildersUtilTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Assert.assertNotNull(properties.getProperty("test_hello"));
+        Assertions.assertNotNull(properties.getProperty("test_hello"));
     }
 
 }
