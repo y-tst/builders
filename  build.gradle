@@ -1,0 +1,41 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // Add your dependencies here
+}
+
+task compileJava(type: JavaCompile) {
+    sourceSets.main.java.srcDirs = ['admin/src/main/java', 'services/src/main/java', 'utils/src/main/java', 'web/src/main/java']
+    classpath = sourceSets.main.compileClasspath
+    destinationDir = file('build/classes/main')
+}
+
+task test(type: Test) {
+    dependsOn compileJava
+    testClassesDirs = fileTree(dir: 'build/classes/main', include: '**/*Test.class')
+    classpath = sourceSets.main.runtimeClasspath
+    reports {
+        junitXml.enabled = true
+    }
+}
+
+task buildWar(type: War) {
+    dependsOn test
+    archiveFileName = 'web.war'
+    webAppDirName = 'web/src/main/webapp'
+    destinationDir = file('build')
+}
+
+task buildJar(type: Jar) {
+    dependsOn test
+    archiveFileName = 'admin.jar'
+    from 'build/classes/main'
+    manifest {
+        attributes 'Main-Class': 'com.builders.admin.AdminEntryPoint'
+    }
+    destinationDir = file('build')
+}

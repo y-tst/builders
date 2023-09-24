@@ -1,0 +1,35 @@
+<project name="builders" default="build">
+
+    <property name="project.home" location="." />
+
+    <target name="resolve">
+        <ivy:resolve />
+    </target>
+
+    <target name="compile" depends="resolve">
+        <javac srcdir="${project.home}/admin/src/main/java" destdir="${project.home}/build/admin"/>
+        <!-- Add compilation for other modules here -->
+    </target>
+
+    <target name="test" depends="compile">
+        <junit printsummary="yes">
+            <classpath>
+                <pathelement path="${project.home}/build/admin" />
+                <!-- Add classpath elements for other modules here -->
+            </classpath>
+            <batchtest todir="${project.home}/test-reports">
+                <fileset dir="${project.home}">
+                    <include name="**/*Test.java" />
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="build" depends="test">
+        <war destfile="${project.home}/web.war" webxml="${project.home}/web/src/main/webapp/WEB-INF/web.xml">
+            <fileset dir="${project.home}/web/src/main/webapp" />
+        </war>
+        <jar destfile="${project.home}/admin.jar" basedir="${project.home}/build/admin" />
+    </target>
+
+</project>
